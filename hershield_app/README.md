@@ -1,17 +1,37 @@
-# hershield_app
+# HerSheild
 
-A new Flutter project.
+HerSheild is a Flutter application for confidential and anonymous reporting,
+safety planning, and institution case management.
 
-## Getting Started
+## Run the app
 
-This project is a starting point for a Flutter application.
+From this directory, install the Flutter dependencies and launch the app:
 
-A few resources to get you started if this is your first Flutter project:
+```powershell
+flutter pub get
+flutter run -d chrome
+```
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Configure Supabase
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Authentication and institution registration require a Supabase project. Set the
+project URL and public anon key in `lib/config.dart`; never put a service-role
+key in the Flutter app. Then run `supabase_schema.sql` in the Supabase SQL
+Editor. The schema configures institution applications and row-level access
+policies.
+
+Institution applications are created in the pending state. An administrator
+must review an application and update its `status` to `approved` or `rejected`
+in `public.institution_registrations` before the applicant can access the
+institution dashboard. Approved institutions only see reports assigned to
+their registered organization name.
+
+The institution dashboard currently reads the app's local sample database.
+Configure a secured server-side data source before using it for production
+case management; do not treat sample cases as live reports.
+
+## Languages
+
+The language selector supports English, Amharic, and Afaan Oromo. The chosen
+language applies to the app interface; user-submitted report content remains
+in the language it was written in.
