@@ -32,6 +32,7 @@ migrate_working_dir/
 .pub/
 /build/
 /coverage/
+/hershield_app/
 
 # Symbolication related
 app.*.symbols

@@ -8,10 +8,17 @@ class EmergencyContact {
 }
 
 class AppConfig {
-  /// Supabase: Project Settings > API. Use the anon public key only,
-  /// never the service_role key.
-  static const supabaseUrl = 'YOUR_SUPABASE_URL';
-  static const supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY';
+  /// Supabase: Project Settings > API. Use the publishable (anon) key only,
+  /// never the service_role / secret key. Override at build time with
+  /// --dart-define=NEXT_PUBLIC_SUPABASE_URL=... if needed.
+  static const supabaseUrl = String.fromEnvironment(
+    'NEXT_PUBLIC_SUPABASE_URL',
+    defaultValue: 'https://qvdbufhwydlftoeffbva.supabase.co',
+  );
+  static const supabaseAnonKey = String.fromEnvironment(
+    'NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY',
+    defaultValue: 'sb_publishable_P9XDJAeIWXiDZ6Ot9inw5A_scv8U44u',
+  );
 
   static bool get isConfigured =>
       !supabaseUrl.startsWith('YOUR_') && !supabaseAnonKey.startsWith('YOUR_');

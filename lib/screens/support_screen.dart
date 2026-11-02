@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../data/models.dart';
@@ -29,6 +30,8 @@ class _SupportScreenState extends State<SupportScreen> {
   @override
   Widget build(BuildContext context) {
     return PageBody(
+      showBack: true,
+      fallback: '/home',
       title: 'SupportConnect',
       subtitle: 'Find trusted counseling, legal-aid and support services.',
       children: [
@@ -83,6 +86,12 @@ class _SupportScreenState extends State<SupportScreen> {
           title: 'SheRise does not run these services',
           text:
               'Listings are checked before they appear, but please confirm details directly before relying on them.',
+        ),
+        const SizedBox(height: 16),
+        SecondaryButton(
+          label: 'Back to home',
+          icon: Icons.arrow_back,
+          onPressed: () => context.canPop() ? context.pop() : context.go('/home'),
         ),
       ],
     );

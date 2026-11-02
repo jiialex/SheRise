@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../data/models.dart';
+import '../data/quick_links.dart';
 import '../data/repository.dart';
 import '../theme.dart';
 import '../widgets.dart';
@@ -30,6 +32,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
   @override
   Widget build(BuildContext context) {
     return PageBody(
+      showBack: true,
+      fallback: '/home',
       title: 'Explore',
       subtitle: 'Opportunities to grow, and knowledge to stay safe and strong.',
       children: [
@@ -46,6 +50,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
         ),
         const SizedBox(height: 16),
         if (_tab == 0) ..._opportunities() else ..._learn(),
+        const SizedBox(height: 16),
+        SecondaryButton(
+          label: 'Back to home',
+          icon: Icons.arrow_back,
+          onPressed: () => context.canPop() ? context.pop() : context.go('/home'),
+        ),
       ],
     );
   }
@@ -123,6 +133,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 ),
             ]);
           },
+        ),
+        _QuickLinksSection(
+          title: 'Quick information websites',
+          intro: 'Looking for more listings? These sites update every day.',
+          links: QuickLinks.opportunities,
         ),
         const InfoBox(
           icon: Icons.verified_outlined,
@@ -216,6 +231,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
             children: [Tx(t.$2, style: const TextStyle(height: 1.5))],
           ),
         ),
+      _QuickLinksSection(
+        title: 'Trusted websites to learn more',
+        intro: 'Reliable sources for rights, safety and learning.',
+        links: QuickLinks.learn,
+      ),
       const InfoBox(
         icon: Icons.menu_book_outlined,
         title: 'Reviewed content is coming',
@@ -223,5 +243,94 @@ class _ExploreScreenState extends State<ExploreScreen> {
             'This guidance is general. It will be reviewed by subject-matter experts and localized before launch.',
       ),
     ];
+  }
+}
+
+/// A list of outside websites. Tapping one asks first, then opens the browser.
+class _QuickLinksSection extends StatelessWidget {
+  const _QuickLinksSection({
+    required this.title,
+    required this.intro,
+    required this.links,
+  });
+
+  final String title;
+  final String intro;
+  final List<QuickLink> links;
+
+  Future<void> _open(BuildContext context, QuickLink l) async {
+    final go = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Tx('Leave SheRise?'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(l.host, style: const TextStyle(fontWeight: FontWeight.w700)),
+            const SizedBox(height: 8),
+            const Tx(
+              'This opens an outside website in your browser. It may keep a record in your browser history. SheRise is not responsible for its content.',
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Tx('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Tx('Open website'),
+          ),
+        ],
+      ),
+    );
+    if (go != true || !context.mounted) return;
+    final ok = await launchUrl(
+      Uri.parse(l.url),
+      mode: LaunchMode.externalApplication,
+    );
+    if (!ok && context.mounted) {
+      snack(context, 'Could not open the website.');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 8),
+        Tx(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800)),
+        const SizedBox(height: 4),
+        Tx(intro, style: const TextStyle(color: C.muted, fontSize: 13)),
+        const SizedBox(height: 10),
+        for (final l in links)
+          AppCard(
+            onTap: () => _open(context, l),
+            child: Row(
+              children: [
+                const Icon(Icons.public, color: C.primary),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(l.name, style: const TextStyle(fontWeight: FontWeight.w700)),
+                      const SizedBox(height: 2),
+                      Tx(l.blurb, style: const TextStyle(color: C.muted, fontSize: 12, height: 1.35)),
+                      const SizedBox(height: 4),
+                      Text(l.host, style: const TextStyle(color: C.primary, fontSize: 12)),
+                    ],
+                  ),
+                ),
+                const Icon(Icons.open_in_new, size: 18, color: C.muted),
+              ],
+            ),
+          ),
+        const SizedBox(height: 8),
+      ],
+    );
   }
 }

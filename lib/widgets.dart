@@ -28,13 +28,40 @@ class Tx extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<String>(
       valueListenable: languageNotifier,
-      builder: (_, lang, __) => Text(
+      builder: (_, lang, _) => Text(
         trFor(lang, data),
         style: style,
         textAlign: textAlign,
         maxLines: maxLines,
         overflow: overflow,
         softWrap: softWrap,
+      ),
+    );
+  }
+}
+
+class TxParts extends StatelessWidget {
+  const TxParts(
+    this.parts, {
+    super.key,
+    required this.separator,
+    this.style,
+    this.textAlign,
+  });
+
+  final List<String> parts;
+  final String separator;
+  final TextStyle? style;
+  final TextAlign? textAlign;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<String>(
+      valueListenable: languageNotifier,
+      builder: (_, lang, _) => Text(
+        parts.map((part) => trFor(lang, part)).join(separator),
+        style: style,
+        textAlign: textAlign,
       ),
     );
   }
@@ -248,6 +275,37 @@ class Pill extends StatelessWidget {
       );
 }
 
+class PillParts extends StatelessWidget {
+  const PillParts(
+    this.parts, {
+    super.key,
+    required this.separator,
+    this.bg = C.tint,
+    this.fg = C.primary,
+  });
+
+  final List<String> parts;
+  final String separator;
+  final Color bg;
+  final Color fg;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+        decoration:
+            BoxDecoration(color: bg, borderRadius: BorderRadius.circular(20)),
+        child: TxParts(
+          parts,
+          separator: separator,
+          style: TextStyle(
+            color: fg,
+            fontSize: 11,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
+}
+
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton(
       {super.key, required this.label, required this.onPressed, this.icon});
@@ -393,32 +451,84 @@ class LabeledField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     OutlineInputBorder b(Color c) => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: c));
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 14),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Tx(label,
-            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-        const SizedBox(height: 6),
-        TextField(
-          controller: controller,
-          obscureText: obscure,
-          keyboardType: keyboard,
-          maxLines: maxLines,
-          maxLength: maxLength,
-          onChanged: onChanged,
-          decoration: InputDecoration(
-            hintText: hint == null ? null : tr(hint!),
-            helperText: helper == null ? null : tr(helper!),
-            helperMaxLines: 3,
-            filled: true,
-            fillColor: Colors.white,
-            border: b(C.line),
-            enabledBorder: b(C.line),
-            focusedBorder: b(C.primary),
-          ),
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: c),
+    );
+
+    return ValueListenableBuilder<String>(
+      valueListenable: languageNotifier,
+      builder: (_, lang, _) => Padding(
+        padding: const EdgeInsets.only(bottom: 14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              trFor(lang, label),
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+            ),
+            const SizedBox(height: 6),
+            TextField(
+              controller: controller,
+              obscureText: obscure,
+              keyboardType: keyboard,
+              maxLines: maxLines,
+              maxLength: maxLength,
+              onChanged: onChanged,
+              decoration: InputDecoration(
+                hintText: hint == null ? null : trFor(lang, hint!),
+                helperText: helper == null ? null : trFor(lang, helper!),
+                helperMaxLines: 3,
+                filled: true,
+                fillColor: Colors.white,
+                border: b(C.line),
+                enabledBorder: b(C.line),
+                focusedBorder: b(C.primary),
+              ),
+            ),
+          ],
         ),
-      ]),
+      ),
+    );
+  }
+}
+
+class TxTextField extends StatelessWidget {
+  const TxTextField({
+    super.key,
+    required this.controller,
+    required this.decoration,
+    this.keyboardType,
+    this.maxLines = 1,
+    this.minLines,
+  });
+
+  final TextEditingController controller;
+  final InputDecoration decoration;
+  final TextInputType? keyboardType;
+  final int? maxLines;
+  final int? minLines;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<String>(
+      valueListenable: languageNotifier,
+      builder: (_, lang, _) => TextField(
+        controller: controller,
+        keyboardType: keyboardType,
+        maxLines: maxLines,
+        minLines: minLines,
+        decoration: decoration.copyWith(
+          hintText: decoration.hintText == null
+              ? null
+              : trFor(lang, decoration.hintText!),
+          labelText: decoration.labelText == null
+              ? null
+              : trFor(lang, decoration.labelText!),
+          helperText: decoration.helperText == null
+              ? null
+              : trFor(lang, decoration.helperText!),
+        ),
+      ),
     );
   }
 }
@@ -518,4 +628,16 @@ void snack(BuildContext context, String message) {
   ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
     ..showSnackBar(SnackBar(content: Tx(message)));
+}
+
+void snackParts(
+  BuildContext context,
+  List<String> parts, {
+  String separator = ' ',
+}) {
+  ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(
+      SnackBar(content: TxParts(parts, separator: separator)),
+    );
 }
