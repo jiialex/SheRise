@@ -12,6 +12,12 @@ flutter pub get
 flutter run -d chrome
 ```
 
+## Deploy to Vercel
+
+Build the static web app with `flutter build web --release`, then import the
+generated `build/web` folder as a new Vercel project using the Vercel dashboard.
+The web folder includes a rewrite rule for Flutter's client-side routes.
+
 ## Configure Supabase
 
 Authentication and institution registration require a Supabase project. Set the
