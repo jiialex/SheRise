@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../data/app_database.dart';
 import '../data/models.dart';
+import '../i18n.dart';
 import '../theme.dart';
 import '../widgets.dart';
 
@@ -241,11 +242,14 @@ class _InstitutionBoardScreenState extends State<InstitutionBoardScreen> {
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Colors.white,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: C.ink),
-              tooltip: 'Back to SheRise Home',
-              onPressed: () =>
-                  context.canPop() ? context.pop() : context.go('/home'),
+            leading: ValueListenableBuilder<String>(
+              valueListenable: languageNotifier,
+              builder: (_, lang, _) => IconButton(
+                icon: const Icon(Icons.arrow_back, color: C.ink),
+                tooltip: trFor(lang, 'Back to SheRise Home'),
+                onPressed: () =>
+                    context.canPop() ? context.pop() : context.go('/home'),
+              ),
             ),
             title: Row(
               children: [
@@ -285,10 +289,13 @@ class _InstitutionBoardScreenState extends State<InstitutionBoardScreen> {
               ],
             ),
             actions: [
-              IconButton(
-                tooltip: 'Analytics & Insights',
-                icon: const Icon(Icons.analytics_outlined, color: C.primary),
-                onPressed: () => _showAnalyticsSheet(stats),
+              ValueListenableBuilder<String>(
+                valueListenable: languageNotifier,
+                builder: (_, lang, _) => IconButton(
+                  tooltip: trFor(lang, 'Analytics & Insights'),
+                  icon: const Icon(Icons.analytics_outlined, color: C.primary),
+                  onPressed: () => _showAnalyticsSheet(stats),
+                ),
               ),
             ],
           ),

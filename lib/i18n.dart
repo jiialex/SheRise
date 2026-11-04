@@ -45,7 +45,7 @@ const _t = <String, (String, String)>{
     'ወደ ደህንነት ማዕከል ተመለስ',
     "Gara Wiirtuu Nageenyaatti deebi'i",
   ),
-  'Back to SafeVoice': ('ወደ SafeVoice ተመለስ', "Gara SafeVoice'tti deebi'i"),
+  'Back to SafeVoice': ('ወደ ደህንነቱ የተጠበቀ ድምፅ ተመለስ', "Gara SafeVoice'tti deebi'i"),
   'Next': ('ቀጥል', 'Itti aanu'),
   'Cancel': ('ሰርዝ', 'Haqi'),
   'Save': ('አስቀምጥ', "Olkaa'i"),
@@ -118,6 +118,9 @@ const _t = <String, (String, String)>{
     'እንዴት ልንረዳሽ እንችላለን?',
     'Akkamittiin si gargaaruu dandeenya?',
   ),
+  'SafeVoice': ('ደህንነቱ የተጠበቀ ድምፅ', 'Sagalee Nageenya Qabu'),
+  'SupportConnect': ('የድጋፍ ግንኙነት', 'Quunnamtii Deeggarsaa'),
+  'EqualOpportunity': ('እኩል እድል', 'Carraa Wal-qixa'),
   'Speak up, your way': ('በራስሽ መንገድ ተናገሪ', 'Akka feetetti dubbadhu'),
   'Find someone to help': ('የሚረዳሽ ሰው አግኚ', 'Nama si gargaaru barbaadi'),
   'Build your next chapter': (
@@ -167,6 +170,7 @@ const _t = <String, (String, String)>{
   'Harassment': ('ትንኮሳ', 'Rakkisuu'),
   'Discrimination': ('መድልዎ', 'Garaagarummaa'),
   'Bullying': ('ጉልበተኝነት', 'Cunqursuu'),
+  'Other': ('ሌላ', 'Kan biraa'),
   'Abuse': ('ጥቃት', 'Miidhaa'),
   'Disrespect': ('ክብር ማጉደል', 'Kabaja dhabuu'),
   'Unequal opportunity': ('እኩል ያልሆነ እድል', 'Carraa wal-qixa hin taane'),
@@ -385,22 +389,20 @@ const _t = <String, (String, String)>{
   'Register an institution': ('ተቋም ይመዝግቡ', 'Dhaabbata galmeessaa'),
   'Register your institution': ('ተቋምዎን ይመዝግቡ', 'Dhaabbata keessan galmeessaa'),
   'Institution sign in': ('የተቋም መግቢያ', 'Seensa dhaabbataa'),
-  'Approval required': ('ፈቃድ ማግኘት ያስፈልጋል', 'Eeyyamni barbaachisaadha'),
+  'Institution access': ('የተቋም መግቢያ', 'Seensa dhaabbataa'),
   'Register your organization or sign in to access its separate case dashboard.':
       (
         'የተቋምዎን የጉዳይ ዳሽቦርድ ለመጠቀም ተቋሙን ይመዝግቡ ወይም ይግቡ።',
         'Daashboordii dhimma dhaabbata keessanii argachuuf galmeessaa ykn seenaa.',
       ),
-  'Institution registrations are reviewed before case information is available.':
-      (
-        'የጉዳይ መረጃ ከመታየቱ በፊት የተቋም ምዝገባዎች ይገመገማሉ።',
-        'Odeeffannoon dhimmaa osoo hin argamin dura galmeen dhaabbataa ni gamaaggama.',
-      ),
-  'Provide your organization details. Access remains unavailable until an administrator approves the application.':
-      (
-        'የተቋምዎን ዝርዝር ያስገቡ። አስተዳዳሪ ማመልከቻውን እስኪያጸድቅ ድረስ መግቢያ አይኖርም።',
-        'Odeeffannoo dhaabbata keessanii galchaa. Bulchaan hanga iyyata mirkaneessutti seenuun hin danda’amu.',
-      ),
+  'Register your institution to access its dashboard after sign-up.': (
+    'ከተመዘገቡ በኋላ የተቋምዎን ዳሽቦርድ ለመጠቀም ተቋምዎን ይመዝግቡ።',
+    'Galmaa’anii booda daashboordii dhaabbata keessanii argachuuf dhaabbata keessan galmeessaa.',
+  ),
+  'Provide your organization details to access its dashboard after sign-up.': (
+    'ከተመዘገቡ በኋላ ዳሽቦርዱን ለመጠቀም የተቋምዎን ዝርዝር ያስገቡ።',
+    'Galmaa’anii booda daashboordii argachuuf odeeffannoo dhaabbata keessanii galchaa.',
+  ),
   'Supabase setup required': (
     'Supabase ማዋቀር ያስፈልጋል',
     'Supabase qindeessuun barbaachisaadha',
@@ -411,10 +413,10 @@ const _t = <String, (String, String)>{
         'Dhaabbata osoo hin galmeessin dura Supabase qindeessaa; supabase_schema.sql immoo hojjachiisaa.',
       ),
   'Registration submitted': ('ምዝገባው ተልኳል', 'Galmeen ergameera'),
-  'Verify your email if requested. Your institution dashboard will open after an administrator approves your application.':
+  'Confirm your email if requested, then sign in to access your dashboard. No administrator approval is required.':
       (
-        'ከተጠየቁ ኢሜይልዎን ያረጋግጡ። አስተዳዳሪ ማመልከቻዎን ካጸደቀ በኋላ ዳሽቦርዱ ይከፈታል።',
-        'Yoo gaafatamtan imeelii keessan mirkaneessaa. Bulchaan iyyata keessan erga mirkaneessee booda daashboordiin ni banama.',
+        'ከተጠየቁ ኢሜይልዎን ያረጋግጡ፣ ከዚያ ዳሽቦርዱን ለመጠቀም ይግቡ። የአስተዳዳሪ ፈቃድ አያስፈልግም።',
+        'Yoo gaafatamtan imeelii keessan mirkaneessaa; achii booda daashboordii argachuuf seenaa. Eeyyamni bulchaa hin barbaachisu.',
       ),
   'Institution name': ('የተቋም ስም', 'Maqaa dhaabbataa'),
   'Your full name': ('ሙሉ ስምዎ', 'Maqaa guutuu keessan'),
@@ -611,6 +613,13 @@ const _t = <String, (String, String)>{
     'Xiinxala fudhannaa fi dhimmaa',
   ),
   'Reports by Category': ('ሪፖርቶች በምድብ', 'Gabaasota gosa isaaniitiin'),
+  'Total Reports': ('ጠቅላላ ሪፖርቶች', 'Gabaasota waliigalaa'),
+  'Urgent Flags': ('አስቸኳይ ምልክቶች', 'Mallattoolee ariifachiisoo'),
+  'With Evidence': ('ማስረጃ ያላቸው', 'Ragaa kan qaban'),
+  'Copied': ('ተቀድቷል', 'Garagalfameera'),
+  'minutes ago': ('ደቂቃዎች በፊት', 'daqiiqaa dura'),
+  'hours ago': ('ሰዓታት በፊት', 'sa’aatii dura'),
+  'days ago': ('ቀናት በፊት', 'guyyaa dura'),
   'Intake, Case Review & Workflows': (
     'ቅበላ፣ የጉዳይ ግምገማ እና የስራ ሂደቶች',
     'Fudhannaa, gamaaggama dhimmaa fi adeemsa hojii',
@@ -1073,46 +1082,16 @@ const _t = <String, (String, String)>{
     'ስምዎን፣ ኢሜይልዎን ወይም ተቋምዎን በይለፍ ቃል አይጠቀሙ።',
     'Maqaa, imeelii ykn dhaabbata keessan jecha darbii keessatti hin fayyadamin.',
   ),
-  'Show password': (
-    'የይለፍ ቃል አሳይ',
-    'Jecha darbii agarsiisi',
-  ),
-  'Hide password': (
-    'የይለፍ ቃል ደብቅ',
-    'Jecha darbii dhoksi',
-  ),
-  'Too weak': (
-    'በጣም ደካማ',
-    'Baay\'ee dadhabaa',
-  ),
-  'Weak': (
-    'ደካማ',
-    'Dadhabaa',
-  ),
-  'Fair': (
-    'መካከለኛ',
-    'Giddu galeessa',
-  ),
-  'Good': (
-    'ጥሩ',
-    'Gaarii',
-  ),
-  'Strong': (
-    'ጠንካራ',
-    'Cimaa',
-  ),
-  'At least 12 characters': (
-    'ቢያንስ 12 ቁምፊ',
-    'Arfii yoo xiqqaate 12',
-  ),
-  'Upper and lower case letters': (
-    'ትላልቅና ትናንሽ ፊደላት',
-    'Qubee guddaa fi xiqqaa',
-  ),
-  'A number': (
-    'አንድ ቁጥር',
-    'Lakkoofsa tokko',
-  ),
+  'Show password': ('የይለፍ ቃል አሳይ', 'Jecha darbii agarsiisi'),
+  'Hide password': ('የይለፍ ቃል ደብቅ', 'Jecha darbii dhoksi'),
+  'Too weak': ('በጣም ደካማ', 'Baay\'ee dadhabaa'),
+  'Weak': ('ደካማ', 'Dadhabaa'),
+  'Fair': ('መካከለኛ', 'Giddu galeessa'),
+  'Good': ('ጥሩ', 'Gaarii'),
+  'Strong': ('ጠንካራ', 'Cimaa'),
+  'At least 12 characters': ('ቢያንስ 12 ቁምፊ', 'Arfii yoo xiqqaate 12'),
+  'Upper and lower case letters': ('ትላልቅና ትናንሽ ፊደላት', 'Qubee guddaa fi xiqqaa'),
+  'A number': ('አንድ ቁጥር', 'Lakkoofsa tokko'),
   'A symbol, like ! or #': (
     'አንድ ምልክት፣ ለምሳሌ ! ወይም #',
     'Mallattoo tokko, fkn ! ykn #',
@@ -1141,18 +1120,13 @@ const _t = <String, (String, String)>{
     'ስለ መብት፣ ደህንነትና ትምህርት ታማኝ ምንጮች።',
     'Madda amanamaa mirgaa, nageenyaa fi barnootaa.',
   ),
-  'Leave SheRise?': (
-    'ከSheRise ይውጡ?',
-    'SheRise irraa ba’uu?',
-  ),
-  'This opens an outside website in your browser. It may keep a record in your browser history. SheRise is not responsible for its content.': (
-    'ይህ ውጫዊ ድረ-ገጽ በአሳሽዎ ይከፍታል። በአሳሽዎ ታሪክ ውስጥ ሊመዘገብ ይችላል። SheRise ለይዘቱ ተጠያቂ አይደለም።',
-    'Kun marsariitii alaa biraauzara keessan irratti banuu. Seenaa biraauzara keessanii irratti galmaa’uu ni danda’a. SheRise qabiyyee isaaf itti gaafatamaa miti.',
-  ),
-  'Open website': (
-    'ድረ-ገጹን ክፈት',
-    'Marsariitii bani',
-  ),
+  'Leave SheRise?': ('ከSheRise ይውጡ?', 'SheRise irraa ba’uu?'),
+  'This opens an outside website in your browser. It may keep a record in your browser history. SheRise is not responsible for its content.':
+      (
+        'ይህ ውጫዊ ድረ-ገጽ በአሳሽዎ ይከፍታል። በአሳሽዎ ታሪክ ውስጥ ሊመዘገብ ይችላል። SheRise ለይዘቱ ተጠያቂ አይደለም።',
+        'Kun marsariitii alaa biraauzara keessan irratti banuu. Seenaa biraauzara keessanii irratti galmaa’uu ni danda’a. SheRise qabiyyee isaaf itti gaafatamaa miti.',
+      ),
+  'Open website': ('ድረ-ገጹን ክፈት', 'Marsariitii bani'),
   'Could not open the website.': (
     'ድረ-ገጹን መክፈት አልተቻለም።',
     'Marsariitii banuu hin dandeenye.',
@@ -1165,10 +1139,11 @@ const _t = <String, (String, String)>{
     'እባክዎ መጀመሪያ ኢሜይልዎን ያረጋግጡ። የገቢ እና የspam አቃፊዎን ይመልከቱ።',
     'Maaloo duraan imeelii keessan mirkaneessaa. Inbox fi spam keessan ilaalaa.',
   ),
-  'Email or password is incorrect. If you have not registered yet, create an account first.': (
-    'ኢሜይሉ ወይም የይለፍ ቃሉ ትክክል አይደለም። ገና ካልተመዘገቡ መጀመሪያ መለያ ይፍጠሩ።',
-    'Imeeliin ykn jechi darbii dogoggora. Yoo hin galmoofne, duraan akkaawuntii uumaa.',
-  ),
+  'Email or password is incorrect. If you have not registered yet, create an account first.':
+      (
+        'ኢሜይሉ ወይም የይለፍ ቃሉ ትክክል አይደለም። ገና ካልተመዘገቡ መጀመሪያ መለያ ይፍጠሩ።',
+        'Imeeliin ykn jechi darbii dogoggora. Yoo hin galmoofne, duraan akkaawuntii uumaa.',
+      ),
   'This email already has an account. Please sign in.': (
     'ይህ ኢሜይል መለያ አለው። እባክዎ ይግቡ።',
     'Imeelii kanaaf akkaawuntiin ni jira. Maaloo seenaa.',
@@ -1177,10 +1152,7 @@ const _t = <String, (String, String)>{
     'የግል መዳረሻ አለዎት? ይግቡ',
     'Seensa dhuunfaa qabduu? Seenaa',
   ),
-  'Institution board access': (
-    'የተቋም ቦርድ መግቢያ',
-    'Seensa Boordii Dhaabbataa',
-  ),
+  'Institution board access': ('የተቋም ቦርድ መግቢያ', 'Seensa Boordii Dhaabbataa'),
   'Represent an institution? Register here': (
     'ተቋም ይወክላሉ? እዚህ ይመዝገቡ',
     'Dhaabbata bakka bu’uu? Asitti galmeessaa',
@@ -1347,10 +1319,11 @@ const _t = <String, (String, String)>{
     'ይህ የማሳያ ደረሰኝ ነው። በቀጥታ ሪፖርት አልተላከም።',
     'Kun rasiida agarsiisaati. Gabaasni dhugaa hin ergamne.',
   ),
-  '\$failedUploads item(s) could not be uploaded. Your report was still received. You can describe the details in a message from My Cases.': (
-    '\$failedUploads ንጥል(ሎች) መጫን አልተቻለም። ሪፖርትዎ ግን ተቀብሏል። ዝርዝሩን በጉዳዮቼ ውስጥ ባለ መልዕክት መግለጽ ይችላሉ።',
-    '\$failedUploads wanti/wantoonni fe’uun hin danda’amne. Gabaasni keessan garuu fudhatameera. Bal’ina isaa ergaa Dhimmoota Koo keessatti ibsuu dandeessu.',
-  ),
+  '\$failedUploads item(s) could not be uploaded. Your report was still received. You can describe the details in a message from My Cases.':
+      (
+        '\$failedUploads ንጥል(ሎች) መጫን አልተቻለም። ሪፖርትዎ ግን ተቀብሏል። ዝርዝሩን በጉዳዮቼ ውስጥ ባለ መልዕክት መግለጽ ይችላሉ።',
+        '\$failedUploads wanti/wantoonni fe’uun hin danda’amne. Gabaasni keessan garuu fudhatameera. Bal’ina isaa ergaa Dhimmoota Koo keessatti ibsuu dandeessu.',
+      ),
   'Draft kept while the app stays open.': (
     'መተግበሪያው ክፍት እስካለ ረቂቁ ይቀመጣል።',
     'Appiin banaa hamma jirutti wixineen ni kuufama.',

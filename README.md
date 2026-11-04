@@ -20,11 +20,12 @@ key in the Flutter app. Then run `supabase_schema.sql` in the Supabase SQL
 Editor. The schema configures institution applications and row-level access
 policies.
 
-Institution applications are created in the pending state. An administrator
-must review an application and update its `status` to `approved` or `rejected`
-in `public.institution_registrations` before the applicant can access the
-institution dashboard. Approved institutions only see reports assigned to
-their registered organization name.
+Institution signups can enter the dashboard after any required email
+confirmation. Registration stays pending until an administrator reviews it;
+row-level security only permits approved institutions to access matching
+reports. The dashboard currently displays local sample data, not live reports.
+Do not connect it to real case data until server-side access is restricted to
+verified organization memberships rather than self-entered organization names.
 
 The institution dashboard currently reads the app's local sample database.
 Configure a secured server-side data source before using it for production

@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS public.audit_logs (
 
 CREATE INDEX IF NOT EXISTS idx_audit_report_id ON public.audit_logs(report_id, timestamp DESC);
 
--- Institutional accounts require manual approval before receiving case access.
+-- Institution accounts require review before receiving case access.
 CREATE TABLE IF NOT EXISTS public.institution_registrations (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL UNIQUE REFERENCES auth.users(id) ON DELETE CASCADE,

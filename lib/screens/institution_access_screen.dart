@@ -22,9 +22,9 @@ class InstitutionPortalScreen extends StatelessWidget {
       subtitle: 'Register your organization or sign in to access its separate case dashboard.',
       children: [
         const InfoBox(
-          icon: Icons.verified_user_outlined,
-          title: 'Approval required',
-          text: 'Institution registrations are reviewed before case information is available.',
+          icon: Icons.apartment,
+          title: 'Institution access',
+          text: 'Register your institution to access its dashboard after sign-up.',
         ),
         PrimaryButton(
           label: 'Register an institution',
@@ -101,7 +101,6 @@ class _InstitutionRegistrationScreenState
       if (!mounted) return;
       switch (result) {
         case SignUpResult.signedIn:
-          // Inside: the dashboard shows "pending" until an admin approves.
           context.go('/institution/dashboard');
         case SignUpResult.alreadyRegistered:
           setState(() => _busy = false);
@@ -132,7 +131,7 @@ class _InstitutionRegistrationScreenState
       showBack: true,
       fallback: '/institution',
       title: 'Register your institution',
-      subtitle: 'Provide your organization details. Access remains unavailable until an administrator approves the application.',
+      subtitle: 'Provide your organization details to access its dashboard after sign-up.',
       children: [
         if (!Repo.live)
           const InfoBox(
@@ -143,7 +142,7 @@ class _InstitutionRegistrationScreenState
         if (_submitted)
           const InfoBox(
             title: 'Registration submitted',
-            text: 'Confirm your email from the message we sent, then sign in. Your dashboard opens after an administrator approves your application.',
+            text: 'Confirm your email if requested, then sign in to access your dashboard. No administrator approval is required.',
             tone: Tone.ok,
           ),
         SuggestField(
@@ -352,25 +351,21 @@ class _InstitutionDashboardGateState extends State<InstitutionDashboardGate> {
             showPortalActions: true,
           );
         }
-        if (registration.status == 'approved') {
-          if (widget.caseCode != null) {
-            return InstitutionCaseDetailScreen(code: widget.caseCode!);
-          }
-          return InstitutionBoardScreen(
-            institutionName: registration.institutionName,
-            staffName: Repo.displayName ?? Repo.email ?? 'Institution staff',
+        if (registration.status == 'rejected') {
+          return _InstitutionGateMessage(
+            title: 'Institution registration was not approved',
+            message: 'Contact the review team if you believe this decision was made in error.',
+            onRetry: _refresh,
+            onSignOut: _signOut,
           );
         }
 
-        return _InstitutionGateMessage(
-          title: registration.status == 'rejected'
-              ? 'Institution registration was not approved'
-              : 'Institution registration is pending',
-          message: registration.status == 'rejected'
-              ? 'Contact the review team if you believe this decision was made in error.'
-              : 'Case information stays private until an administrator approves ${registration.institutionName}.',
-          onRetry: _refresh,
-          onSignOut: _signOut,
+        if (widget.caseCode != null) {
+          return InstitutionCaseDetailScreen(code: widget.caseCode!);
+        }
+        return InstitutionBoardScreen(
+          institutionName: registration.institutionName,
+          staffName: Repo.displayName ?? Repo.email ?? 'Institution staff',
         );
       },
     );
